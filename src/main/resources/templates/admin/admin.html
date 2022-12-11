@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+
+    <title>NA_TORTAH Админ панель</title>
+    <link th:href="@{'/css/index.css'}" rel="stylesheet" type="text/css">
+</head>
+<body>
+<header>
+
+    <div><h1>NA_TORTAH</h1></div>
+    <div class="nav_orders">
+
+        <div><a th:href="@{/admin/product/add}" >Добавить товар</a></div>
+        <div><a th:href="@{/admin/product/usersList}" >Пользователи</a></div>
+        <div><a th:href="@{/admin/product/orderList}" >Заказы</a></div>
+        <form method="post" th:action="@{/logout}">
+            <input type="submit" value="Выйти из личного кабинета">
+        </form>
+    </div>
+
+
+</header>
+<h3>Личный кабинет администратора</h3>
+<!--
+<form th:method="POST" th:action="@{/logout}">
+    <input type="submit" value="Выйти из личного кабинета">
+</form>
+<a href="/admin/product/add">Добавить товар</a>
+<br/>
+<a href="/admin/product/usersList">Просмотр и редактирование пользователей</a>
+<a href="/admin/product/orderList">Просмотр и редактирование заказов</a>
+-->
+<h3>Каталог товаров: </h3>
+<hr>
+<div class="flex-container">
+    <div th:each="product : ${products}">
+        <img th:src="'/img/' + ${product.imageList[0].getFileName()}" width="300px">
+        <br>
+        <p th:text="'Наименование: ' + ${product.getTitle()}"></p>
+        <br>
+        <p th:text="'Описание: ' + ${product.getDescription()}"></p>
+        <br>
+        <p th:text="'Цена: ' + ${product.getPrice()}"></p>
+        <br>
+      <!--  <p th:text="'Склад: ' + ${product.getWarehouse()}"></p>
+        <p th:text="'Продавец: ' + ${product.getSeller()}"></p>-->
+        <p th:text="'Категория товара: ' + ${product.getCategory().getName()}"></p>
+        <br>
+        <a th:href="@{/admin/product/edit/{id}(id=${product.getId()})}">Редактировать товар</a>
+        <br>
+        <a th:href="@{/admin/product/delete/{id}(id=${product.getId()})}">Удалить товар</a>
+
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>NA_TORTAH Редактирование заказа</title>
+    <link th:href="@{'/css/index.css'}" rel="stylesheet" type="text/css">
+</head>
+<body>
+<header>
+    <div><h1>NA_TORTAH</h1></div>
+    <div class="nav_orders">
+
+        <div><a th:href="@{/admin/product/add}" >Добавить товар</a></div>
+        <div><a th:href="@{/admin/product/usersList}" >Пользователи</a></div>
+        <div><a th:href="@{/admin/product/orderList}" >Заказы</a></div>
+        <form method="post" th:action="@{/logout}">
+            <input type="submit" value="Выйти из личного кабинета">
+        </form>
+    </div>
+</header>
+<h3>Редактирование заказа</h3>
+<form th:method="POST" th:action="@{/admin/product/orderList/editOrder/{id}(id=${editOrder.getId()})}" th:object="${editOrder}">
+    <label for="person">ID пользователя </label>
+    <input type="text" th:field="*{person}" id="person" readonly>
+
+    <label for="product">ID продукта </label>
+    <input type="text" th:field="*{product}" id="product" readonly>
+
+    <label for="number">Номер заказа </label>
+    <input type="text" th:field="*{number}" id="number" readonly>
+
+    <label for="dateTime">Дата и время оформления заказа</label>
+    <input type="text" th:field="*{dateTime}" id="dateTime" readonly>
+
+    <label for="qty">Вес торта</label>
+    <input type="number" th:field="*{qty}" min="1" step="0.00" id="qty">
+    <div style="color: red" th:if="${#fields.hasErrors('qty')}" th:errors="*{qty}"></div>
+    <br>
+
+    <label for="date">Дата отдачи торта торта</label>
+    <input type="date"  th:field="*{date}" placeholder="Дата отдачи торта" name="date" id="date">
+    <div style="color: red" th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></div>
+
+    <br>
+
+
+
+    <label for="tortFilling">Начинка: </label>
+    <select name="tortFilling" th:field="*{tortFilling}" id="tortFilling">
+        <div th:each="element : ${tortFilling}">
+            <option th:text="${element.getName()}" th:value="${element.getId()}"></option>
+        </div>
+    </select>
+
+    <br>
+    <label for="comment">Комментарий пользователя: </label>
+    <textarea th:field="*{comment}" placeholder="Комментарий" id="comment"></textarea>
+    <div style="color: red" th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}"></div>
+
+   <!-- <label for="status">Статус заказа: </label>
+    <textarea th:field="*{status}" placeholder="Статус" id="status"></textarea>
+    <div style="color: red" th:if="${#fields.hasErrors('status')}" th:errors="*{status}"></div>-->
+
+    <label for="status">Статус заказа: </label>
+    <select id="status" th:field="*{status}">
+        <option th:each="state : ${T(com.example.springsecurityapplication.enumm.Status).values()}"
+                th:value="${state}"
+                th:text="${state}">
+            <br>
+    </select>
+    <br>
+    <br>
+    <br>
+    <br>
+    <input type="submit" value="Редактировать">
+</form>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NA_TORTAH Пользователи</title>
+    <link th:href="@{'/css/index.css'}" rel="stylesheet" type="text/css">
+</head>
+<body>
+<header>
+
+    <div><h1>NA_TORTAH</h1></div>
+    <div class="nav_orders">
+
+        <div><a th:href="@{/admin/product/add}" >Добавить товар</a></div>
+        <div><a th:href="@{/admin/product/usersList}" >Пользователи</a></div>
+        <div><a th:href="@{/admin/product/orderList}" >Заказы</a></div>
+        <form method="post" th:action="@{/logout}">
+            <input type="submit" value="Выйти из личного кабинета">
+        </form>
+    </div>
+
+
+</header>
+    <div>
+        <h1>Список пользователей</h1>
+        <div th:each="person : ${persons}">
+
+            <p th:text="'Логин: ' + ${person.getLogin()}"></p>
+            <p th:text="'Роль: ' + ${person.getRole().getName()}"></p>
+          <!--  <p th:text="'Состояние: ' + ${person.getStatus()}"></p>-->
+            <p th:text="'Имя: ' + ${person.getFirstname()}"></p>
+            <p th:text="'Дата рождения: ' + ${person.getBirthdate}"></p>
+            <p th:text="'E-mail: ' + ${person.getEmail}"></p>
+            <p th:text="'Номер телефона: ' + ${person.getPhone}"></p>
+
+            <a th:href="@{/admin/product/usersList/editUser/{id}(id=${person.getId()})}">Редактировать пользователя</a>
+            <a th:href="@{/admin/product/usersList/deleteUser/{id}(id=${person.getId()})}">Удалить пользователя</a>
+            <hr>
+        </div>
+    </div>
+</body>
+</html>
